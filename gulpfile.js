@@ -15,7 +15,7 @@ gulp.task( 'download', function () {
   var urls = [
     'http://www.post.japanpost.jp/zipcode/dl/roman/ken_all_rome.zip',
     'http://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip',
-    'http://www.post.japanpost.jp/zipcode/dl/kogaki/zip/01hokkai.zip'
+    'http://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip'
   ];
   return download( urls )
     .pipe( decompress() )
@@ -50,11 +50,12 @@ gulp.task( 'v1-jigyosyo', ['download'], function () {
  * Create an API of the postal code
  */
 gulp.task( 'v2', [ 'download' ], function () {
-  gulp.src( 'api/01HOKKAI.CSV' )
+  gulp.src( 'api/KEN_ALL.CSV' )
     .pipe( postal2kanakanjiJson() )
     .pipe( v2() )
     .pipe( chmod( 644 ) )
     .pipe( gulp.dest( 'api/v2' ) );
 } );
 
-gulp.task( 'default', [ 'v1', 'v1-jigyosyo', 'v2' ] );
+// gulp.task( 'default', [ 'v1', 'v1-jigyosyo', 'v2' ] );
+gulp.task( 'default', [ 'v2' ] );
